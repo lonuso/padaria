@@ -5,6 +5,8 @@ import com.louise.padaria.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProdutoService {
     @Autowired
@@ -36,6 +38,9 @@ public class ProdutoService {
         Produto produto = repository.findById(id).get();
         return produto;
 
+    }
+    public List<Produto> buscarTodosProdutos(){
+        return repository.findAll();
     }
 
 }

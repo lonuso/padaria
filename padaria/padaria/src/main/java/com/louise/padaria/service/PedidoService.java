@@ -5,6 +5,8 @@ import com.louise.padaria.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PedidoService {
 
@@ -38,6 +40,11 @@ public class PedidoService {
         Pedido pedido = repository.findById(id).get();
         return pedido;
 
+    }
+
+    public List<Pedido> buscarTodosPedidos(){
+
+        return repository.findAll();
     }
 
 }

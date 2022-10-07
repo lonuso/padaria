@@ -5,6 +5,8 @@ import com.louise.padaria.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClienteService {
     @Autowired
@@ -38,4 +40,10 @@ public class ClienteService {
         Cliente cliente = repository.findById(id).get();
         return cliente;
     }
+
+    public List<Cliente> buscarTodosClientes(){
+
+        return repository.findAll();
+    }
+
 }

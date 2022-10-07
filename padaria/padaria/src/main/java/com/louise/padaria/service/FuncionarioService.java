@@ -4,6 +4,9 @@ import com.louise.padaria.model.Funcionario;
 import com.louise.padaria.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 //Service -> anotaçãoque indica que essa classe é uma classe de serviço
 @Service
 public class FuncionarioService {
@@ -39,6 +42,10 @@ public class FuncionarioService {
         Funcionario funcionario = repository.findById(id).get();
         return funcionario;
 
+    }
+
+    public List<Funcionario> buscarTodosFuncionarios(){
+        return repository.findAll();
     }
 
 }
