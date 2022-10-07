@@ -2,6 +2,8 @@ package com.louise.padaria.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+
 //Entity -> anotação para identificar que essa classe é uma tabela no banco
 @Entity
 //Table -> anotação para identificar e renomear a identificação da tabela no banco
@@ -26,6 +28,15 @@ public class Funcionario implements Serializable{
    private String cpf;
    @Column(name = "telefone_funcionario")
    private String telefone;
+
+   @OneToMany(mappedBy = "funcionario")
+   private List<Pedido> listaPedidos;
+   public List<Pedido> getListaPedidos(){
+       return this.listaPedidos;
+   }
+   public void setListaPedidos(List<Pedido> listaPedidos){
+       this.listaPedidos = listaPedidos;
+   }
 
    //get -> é um padrão de criação de recuperar valores de um atributo
    public Integer getId(){
