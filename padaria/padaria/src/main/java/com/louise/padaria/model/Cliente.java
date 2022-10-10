@@ -3,6 +3,7 @@ package com.louise.padaria.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -23,6 +24,10 @@ public class Cliente implements Serializable {
     @Column(name = "data_de_nascimento")
     private Date data;
 
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> listaPedidos;
+
+
     public Integer getId(){return this.id;}
     public String getNome(){return this.nome;}
     public String getCpf(){return this.cpf;}
@@ -36,6 +41,10 @@ public class Cliente implements Serializable {
     public void setTelefone(String telefone){this.telefone = telefone;}
     public void setEmail(String email){this.email = email;}
     public void setData(Date data){this.data = data;}
+
+    public List<Pedido> getListaPedidos(){return this.listaPedidos;}
+    public void setListaPedidos(List<Pedido> listaPedidos){this.listaPedidos = listaPedidos;}
+
 
     @Override
     public boolean equals(Object o) {

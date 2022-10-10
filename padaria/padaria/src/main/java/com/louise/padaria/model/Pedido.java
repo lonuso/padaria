@@ -18,11 +18,9 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "funcionario_pedido", nullable = false)
     private Funcionario funcionario;
-
     @ManyToOne
     @JoinColumn(name = "produto_pedido", nullable = false)
     private Produto produto;
-
     @ManyToOne
     @JoinColumn(name = "cliente_pedido", nullable = false)
     private Cliente cliente;
@@ -38,7 +36,6 @@ public class Pedido implements Serializable {
     public Funcionario getFuncionario(){return this.funcionario;}
     public Produto getProduto(){return this.produto;}
     public Cliente getCliente(){return this.cliente;}
-
     public void setFuncionario(Funcionario funcionario){this.funcionario = funcionario;}
     public void setProduto(Produto produto){this.produto = produto;}
     public void setCliente(Cliente cliente){this.cliente = cliente;}

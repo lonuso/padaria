@@ -1,5 +1,7 @@
 package com.louise.padaria.model;
 
+import org.springframework.context.annotation.EnableMBeanExport;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -29,6 +31,8 @@ public class Funcionario implements Serializable{
    @Column(name = "telefone_funcionario")
    private String telefone;
 
+   //mappedBy -> faz referencia ao atributo que criei na classe pedido.
+   //OneToMany -> Referencia inversa ao fk de funcionario na tabela pedido
    @OneToMany(mappedBy = "funcionario")
    private List<Pedido> listaPedidos;
    public List<Pedido> getListaPedidos(){
@@ -39,9 +43,7 @@ public class Funcionario implements Serializable{
    }
 
    //get -> é um padrão de criação de recuperar valores de um atributo
-   public Integer getId(){
-       return this.id;
-   }
+   public Integer getId(){return this.id;}
    //this -> significa que estou acessando o atributo name da minha propria classe
    public String getNome(){
        return this.nome;
@@ -72,7 +74,8 @@ public class Funcionario implements Serializable{
        this.telefone = telefone;
    }
 
-   //Override -> modifica o comportamento de um metodo como explicito na implementação abaixo
+
+    //Override -> modifica o comportamento de um metodo como explicito na implementação abaixo
     @Override
     //equals -> metodo padrao da class Object que verifica se um objeto é igual a outro
     //sobreescrevi esse metodo porque eu queria que essa classe fosse identificada como igual quando os ids fossem iguais

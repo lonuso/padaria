@@ -2,6 +2,7 @@ package com.louise.padaria.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "produtos")
@@ -17,15 +18,21 @@ public class Produto implements Serializable {
     @Column(name = "quantidade_produto")
     private int quantidade;
 
+    @OneToMany(mappedBy = "produto")
+    private List<Pedido> listaPedidos;
+
     public Integer getId() {return this.id;}
     public String getNome(){return this.nome;}
     public double getPreco(){return this.preco;}
     public int getQuantidade(){return this.quantidade;}
-
     public void setId(Integer id){this.id = id;}
     public void setNome(String nome){this.nome = nome;}
     public void setPreco(double preco){this.preco = preco;}
     public void setQuantidade(int quantidade){this.quantidade = quantidade;}
+
+
+    public List<Pedido> getPedido(){return this.listaPedidos;}
+    public void setPedido(List<Pedido> listaPedidos){this.listaPedidos = listaPedidos;}
 
     @Override
     public boolean equals(Object o){
