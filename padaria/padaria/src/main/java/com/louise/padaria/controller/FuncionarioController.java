@@ -32,4 +32,23 @@ public class FuncionarioController {
         return  new ResponseEntity<>("Ocorreu um erro ao salvar",HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping(value = "/funcionario/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> editarFuncionario(@RequestBody Funcionario funcionario){
+        boolean editar = service.atualizarFuncionario(funcionario);
+        if(editar == true){
+            return new ResponseEntity<>("Editado com sucesso", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Ocorreu erro", HttpStatus.NOT_FOUND);
+
+    }
+
+    @DeleteMapping(value = "/funcionario/deletar/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> deletarFuncionario(@PathVariable ("id") Integer id){
+        boolean deletar = service.deletarFuncionario(id);
+        if(deletar == true){
+            return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Ocorreu erro", HttpStatus.BAD_REQUEST);
+    }
+
 }
