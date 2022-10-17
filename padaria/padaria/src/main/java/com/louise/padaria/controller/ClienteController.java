@@ -32,4 +32,24 @@ public class ClienteController {
         return new ResponseEntity<>("Ocorreu um erro ao salvar", HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping(value = "/cliente/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> editarCliente(@RequestBody Cliente cliente){
+        boolean editar = service.atualizarCliente(cliente);
+        if(editar == true){
+            return new ResponseEntity<>("Editado com sucesso", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Ocorreu erro", HttpStatus.NOT_FOUND);
+
+    }
+
+    @DeleteMapping(value = "/cliente/deletar/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> deletarCliente(@PathVariable ("id") Integer id){
+        boolean deletar = service.deletarCliente(id);
+        if(deletar == true){
+            return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Ocorreu erro", HttpStatus.BAD_REQUEST);
+    }
+
+
 }
