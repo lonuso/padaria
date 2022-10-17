@@ -41,9 +41,7 @@ public class FuncionarioService {
                 return true;
             }
         }
-
         return false;
-
     }
 
     public Funcionario buscarFuncionarioPorId(Integer id){
@@ -59,6 +57,7 @@ public class FuncionarioService {
     }
 
     public List<Funcionario> buscarTodosFuncionarios(){
+
         return repository.findAll();
     }
 
