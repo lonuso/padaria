@@ -31,4 +31,22 @@ public class PedidoController {
         return new ResponseEntity<>("Ocorreu um erro ao salvar", HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping(value = "/pedido/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> editarPedido(@RequestBody Pedido pedido){
+        boolean editar = service.atualizarPedido(pedido);
+        if(editar == true){
+            return new ResponseEntity<>("Editado com sucesso", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Ocorreu erro", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping(value = "/pedido/deletar/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> deletarPedido(@PathVariable ("id") Integer id){
+        boolean deletar = service.deletarPedido(id);
+        if(deletar == true){
+            return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Não se deleta o nada", HttpStatus.BAD_REQUEST);
+    }
+
 }

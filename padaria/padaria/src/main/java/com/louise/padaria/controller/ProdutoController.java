@@ -30,4 +30,23 @@ public class ProdutoController {
         }
         return new ResponseEntity<>("Ocorreu um erro ao salvar", HttpStatus.BAD_REQUEST);
     }
+
+    @PutMapping(value = "/produto/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> editarProduto(@RequestBody Produto produto){
+        boolean editar = service.atualizarProduto(produto);
+        if(editar == true){
+            return new ResponseEntity<>("Editado com sucesso", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Ocorreu erro", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping(value = "/produto/deletar/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> deletarProduto(@PathVariable ("id") Integer id){
+        boolean deletar = service.deletarProduto(id);
+        if(deletar == true){
+            return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Ocorreu erro", HttpStatus.BAD_REQUEST);
+    }
+
 }
