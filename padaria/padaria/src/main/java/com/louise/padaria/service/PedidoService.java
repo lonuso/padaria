@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PedidoService {
@@ -33,10 +34,10 @@ public class PedidoService {
         return true;
     }
     
-    public boolean deletarPedido(Pedido p){
-        Pedido pedido = buscarPedidoPorId(p.getId());
+    public boolean deletarPedido(Integer p){
+        Pedido pedido = buscarPedidoPorId(p);
         if(pedido != null){
-            repository.delete(p);
+            repository.delete(pedido);
             return true;
         }
         return false;
@@ -45,6 +46,12 @@ public class PedidoService {
     public boolean atualizarPedido(Pedido ped){
         Pedido pedido = buscarPedidoPorId(ped.getId());
         if (pedido != null){
+            Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(ped.getFuncionario().getId());
+            Cliente cliente = clienteService.buscarClientePorId(ped.getCliente().getId());
+            Produto produto = produtoService.buscarProdutoPorId(ped.getProduto().getId());
+            ped.setFuncionario(funcionario);
+            ped.setCliente(cliente);
+            ped.setProduto(produto);
             repository.save(ped);
             return true;
         }
@@ -52,8 +59,11 @@ public class PedidoService {
     }
 
     public Pedido buscarPedidoPorId(Integer id) {
-        Pedido pedido = repository.findById(id).get();
-        return pedido;
+        Optional<Pedido> pedido = repository.findById(id);
+        if(pedido.isPresent()){
+            return pedido.get();
+        }
+        return null;
 
     }
 

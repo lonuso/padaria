@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -17,28 +18,40 @@ public class ClienteService {
         return true;
     }
 
-    public boolean deletarCliente(Cliente c){
-        Cliente cliente = buscarClientePorId(c.getId());
-        if(cliente != null){
-            repository.delete(c);
-            return true;
+    public boolean deletarCliente(Integer c){
+        if(c != null){
+            Cliente cliente = buscarClientePorId(c);
+            if(cliente != null){
+                repository.delete(cliente);
+                return true;
+            }
+
         }
+
         return false;
     }
 
     public boolean atualizarCliente(Cliente cli){
-        Cliente cliente = buscarClientePorId(cli.getId());
-        if (cliente != null){
-            repository.save(cli);
-            return true;
+        if(cli != null){
+            Cliente cliente = buscarClientePorId(cli.getId());
+            if (cliente != null){
+                repository.save(cli);
+                return true;
 
+            }
         }
         return false;
     }
 
     public Cliente buscarClientePorId(Integer id){
-        Cliente cliente = repository.findById(id).get();
-        return cliente;
+        if(id == null){
+            return null;
+        }
+        Optional<Cliente>cliente = repository.findById(id);
+        if(cliente.isPresent()){
+            return cliente.get();
+        }
+        return null;
     }
 
     public List<Cliente> buscarTodosClientes(){
