@@ -1,5 +1,7 @@
 package com.louise.padaria.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -25,6 +27,7 @@ public class Cliente implements Serializable {
     private Date data;
 
     @OneToMany(mappedBy = "cliente")
+    @JsonIgnore
     private List<Pedido> listaPedidos;
 
 

@@ -1,5 +1,7 @@
 package com.louise.padaria.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -14,25 +16,26 @@ public class Produto implements Serializable {
     @Column(name = "nome_produto")
     private String nome;
     @Column(name = "preco_produto")
-    private double preco;
+    private Double preco;
     @Column(name = "quantidade_produto")
     private int quantidade;
 
-    @OneToMany(mappedBy = "produto")
-    private List<Pedido> listaPedidos;
+   // @OneToMany(mappedBy = "produto")
+    //@JsonIgnore
+    //private List<Pedido> listaPedidos;
 
     public Integer getId() {return this.id;}
     public String getNome(){return this.nome;}
-    public double getPreco(){return this.preco;}
+    public Double getPreco(){return this.preco;}
     public int getQuantidade(){return this.quantidade;}
     public void setId(Integer id){this.id = id;}
     public void setNome(String nome){this.nome = nome;}
-    public void setPreco(double preco){this.preco = preco;}
+    public void setPreco(Double preco){this.preco = preco;}
     public void setQuantidade(int quantidade){this.quantidade = quantidade;}
 
 
-    public List<Pedido> getPedido(){return this.listaPedidos;}
-    public void setPedido(List<Pedido> listaPedidos){this.listaPedidos = listaPedidos;}
+    //public List<Pedido> getPedido(){return this.listaPedidos;}
+    //public void setPedido(List<Pedido> listaPedidos){this.listaPedidos = listaPedidos;}
 
     @Override
     public boolean equals(Object o){

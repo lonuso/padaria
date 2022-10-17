@@ -1,5 +1,6 @@
 package com.louise.padaria.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.annotation.EnableMBeanExport;
 
 import javax.persistence.*;
@@ -34,6 +35,7 @@ public class Funcionario implements Serializable{
    //mappedBy -> faz referencia ao atributo que criei na classe pedido.
    //OneToMany -> Referencia inversa ao fk de funcionario na tabela pedido
    @OneToMany(mappedBy = "funcionario")
+   @JsonIgnore
    private List<Pedido> listaPedidos;
    public List<Pedido> getListaPedidos(){
        return this.listaPedidos;
