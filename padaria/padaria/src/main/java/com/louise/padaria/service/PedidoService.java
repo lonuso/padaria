@@ -1,5 +1,6 @@
 package com.louise.padaria.service;
 
+import com.louise.padaria.mapper.FuncionarioMapper;
 import com.louise.padaria.model.Cliente;
 import com.louise.padaria.model.Funcionario;
 import com.louise.padaria.model.Pedido;
@@ -22,9 +23,11 @@ public class PedidoService {
     private ClienteService clienteService;
     @Autowired
     private ProdutoService produtoService;
+    @Autowired
+    private FuncionarioMapper funcionarioMapper;
 
     public boolean salvarPedido(Pedido pedido){
-        Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(pedido.getFuncionario().getId());
+        Funcionario funcionario = funcionarioMapper.converterDtoParaModel(funcionarioService.buscarFuncionarioPorId(pedido.getFuncionario().getId()));
         Cliente cliente = clienteService.buscarClientePorId(pedido.getCliente().getId());
         Produto produto = produtoService.buscarProdutoPorId(pedido.getProduto().getId());
         pedido.setFuncionario(funcionario);
@@ -46,7 +49,7 @@ public class PedidoService {
     public boolean atualizarPedido(Pedido ped){
         Pedido pedido = buscarPedidoPorId(ped.getId());
         if (pedido != null){
-            Funcionario funcionario = funcionarioService.buscarFuncionarioPorId(ped.getFuncionario().getId());
+            Funcionario funcionario = funcionarioMapper.converterDtoParaModel(funcionarioService.buscarFuncionarioPorId(ped.getFuncionario().getId()));
             Cliente cliente = clienteService.buscarClientePorId(ped.getCliente().getId());
             Produto produto = produtoService.buscarProdutoPorId(ped.getProduto().getId());
             ped.setFuncionario(funcionario);
