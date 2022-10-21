@@ -1,5 +1,8 @@
 package com.louise.padaria.controller;
 
+import com.louise.padaria.dto.PedidoConsultarDto;
+import com.louise.padaria.dto.PedidoEditarDto;
+import com.louise.padaria.dto.PedidoSalvarDto;
 import com.louise.padaria.model.Pedido;
 import com.louise.padaria.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +17,8 @@ public class PedidoController {
     private PedidoService service;
 
     @GetMapping(value = "/pedido/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Pedido> procuraPedidoPorId(@PathVariable("id")Integer id){
-        Pedido pedido = service.buscarPedidoPorId(id);
+    public ResponseEntity<PedidoConsultarDto> procuraPedidoPorId(@PathVariable("id")Integer id){
+        PedidoConsultarDto pedido = service.buscarPedidoPorId(id);
         if(pedido != null){
             return new ResponseEntity<>(pedido, HttpStatus.OK);
         }
@@ -23,7 +26,7 @@ public class PedidoController {
     }
 
     @PostMapping(value = "/pedido/salvar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> salvarPedido(@RequestBody Pedido novo){
+    public ResponseEntity<String> salvarPedido(@RequestBody PedidoSalvarDto novo){
         boolean salva = service.salvarPedido(novo);
         if(salva == true){
             return new ResponseEntity<>("Salvo com sucesso", HttpStatus.CREATED);
@@ -32,7 +35,7 @@ public class PedidoController {
     }
 
     @PutMapping(value = "/pedido/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> editarPedido(@RequestBody Pedido pedido){
+    public ResponseEntity<String> editarPedido(@RequestBody PedidoEditarDto pedido){
         boolean editar = service.atualizarPedido(pedido);
         if(editar == true){
             return new ResponseEntity<>("Editado com sucesso", HttpStatus.OK);

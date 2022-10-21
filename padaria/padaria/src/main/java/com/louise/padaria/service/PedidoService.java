@@ -1,6 +1,7 @@
 package com.louise.padaria.service;
 
 import com.louise.padaria.dto.PedidoConsultarDto;
+import com.louise.padaria.dto.PedidoEditarDto;
 import com.louise.padaria.dto.PedidoSalvarDto;
 import com.louise.padaria.mapper.ClienteMapper;
 import com.louise.padaria.mapper.FuncionarioMapper;
@@ -60,10 +61,11 @@ public class PedidoService {
         return false;
     }
 
-    public boolean atualizarPedido(Pedido ped){
-        if(ped != null){
-            PedidoConsultarDto pedido = buscarPedidoPorId(ped.getId());
+    public boolean atualizarPedido(PedidoEditarDto dto){
+        if(dto != null){
+            PedidoConsultarDto pedido = buscarPedidoPorId(dto.getId());
             if (pedido != null) {
+                Pedido ped = mapper.converteDtoParaModel(dto);
                 Funcionario funcionario = funcionarioMapper.converterDtoParaModel(funcionarioService.buscarFuncionarioPorId(ped.getFuncionario().getId()));
                 Cliente cliente = clienteMapper.converteDtoParaModel(clienteService.buscarClientePorId(ped.getCliente().getId()));
                 Produto produto = produtoMapper.converteDtoParaModel(produtoService.buscarProdutoPorId(ped.getProduto().getId()));
