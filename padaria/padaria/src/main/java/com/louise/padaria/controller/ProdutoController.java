@@ -1,8 +1,6 @@
 package com.louise.padaria.controller;
 
-import com.louise.padaria.dto.ProdutoConsultarDto;
-import com.louise.padaria.dto.ProdutoEditarDto;
-import com.louise.padaria.dto.ProdutoSalvarDto;
+import com.louise.padaria.dto.*;
 import com.louise.padaria.model.Produto;
 import com.louise.padaria.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ProdutoController {
@@ -50,6 +50,13 @@ public class ProdutoController {
             return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
         }
         return new ResponseEntity<>("Ocorreu erro", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(value = "/produto/todos", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<ProdutoDto>> listarTodosProduto(){
+
+        return new ResponseEntity<>(service.buscarTodosProdutos(), HttpStatus.OK);
+
     }
 
 }

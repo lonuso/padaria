@@ -1,6 +1,7 @@
 package com.louise.padaria.service;
 
 import com.louise.padaria.dto.PedidoConsultarDto;
+import com.louise.padaria.dto.PedidoDto;
 import com.louise.padaria.dto.PedidoEditarDto;
 import com.louise.padaria.dto.PedidoSalvarDto;
 import com.louise.padaria.mapper.ClienteMapper;
@@ -15,6 +16,7 @@ import com.louise.padaria.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,9 +90,14 @@ public class PedidoService {
 
     }
 
-    public List<Pedido> buscarTodosPedidos(){
+    public List<PedidoDto> buscarTodosPedidos(){
+        List<PedidoDto> listaPedido = new ArrayList<>();
+        List<Pedido> list = repository.findAll();
+        for (Pedido p: list) {
+            listaPedido.add(mapper.converteModelParaDto(p));
+        }
 
-        return repository.findAll();
+        return listaPedido;
     }
 
 }

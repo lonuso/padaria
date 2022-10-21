@@ -59,11 +59,11 @@ public class ClienteService {
         return null;
     }
 
-    public List<Cliente> buscarTodosClientes(){
+    public List<ClienteDto> buscarTodosClientes(){
         List<ClienteDto>lista = new ArrayList<>();
         for (Cliente c: repository.findAll()){
             lista.add(mapper.converteModelParaDto(c));
         }
-        return repository.findAll();
+        return lista;
     }
 }

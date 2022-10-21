@@ -1,8 +1,6 @@
 package com.louise.padaria.controller;
 
-import com.louise.padaria.dto.PedidoConsultarDto;
-import com.louise.padaria.dto.PedidoEditarDto;
-import com.louise.padaria.dto.PedidoSalvarDto;
+import com.louise.padaria.dto.*;
 import com.louise.padaria.model.Pedido;
 import com.louise.padaria.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class PedidoController {
@@ -50,6 +50,14 @@ public class PedidoController {
             return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
         }
         return new ResponseEntity<>("Não se deleta o nada", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(value = "/pedido/todos", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<PedidoDto>> listarTodosPedidos(){
+
+        return new ResponseEntity<>(service.buscarTodosPedidos(), HttpStatus.OK);
+
+
     }
 
 }
