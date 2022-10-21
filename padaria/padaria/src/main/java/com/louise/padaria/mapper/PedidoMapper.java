@@ -75,7 +75,6 @@ public class PedidoMapper {
     }
     public PedidoSalvarDto converteModelParaDtoSalvar(Pedido model){
         PedidoSalvarDto dto = new PedidoSalvarDto();
-        dto.setId(model.getId());
         dto.setQuantidade(model.getQuantidade());
         dto.setValor(model.getValor());
         dto.setIdFuncionario(model.getFuncionario().getId());
@@ -85,7 +84,6 @@ public class PedidoMapper {
     }
     public Pedido converteDtoParaModel(PedidoSalvarDto dto){
         Pedido model = new Pedido();
-        model.setId(dto.getId());
         model.setQuantidade(dto.getQuantidade());
         model.setValor(dto.getValor());
         Funcionario funcionarioModel = new Funcionario();
