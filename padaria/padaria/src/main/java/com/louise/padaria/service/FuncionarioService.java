@@ -35,12 +35,9 @@ public class FuncionarioService {
                 repository.delete(funcionario);
                 return true;
             }
-
         }
-
         return false;
     }
-
     public boolean atualizarFuncionario(FuncionarioEditarDto func){
         if(func != null){
             FuncionarioConsultarDto funcionario = buscarFuncionarioPorId(func.getId());
@@ -52,7 +49,6 @@ public class FuncionarioService {
         }
         return false;
     }
-
     public FuncionarioConsultarDto buscarFuncionarioPorId(Integer id){
         if(id == null){
             return null;
@@ -63,16 +59,13 @@ public class FuncionarioService {
             return dto;
         }
         return null;
-
     }
 
     public List<FuncionarioDto> buscarTodosFuncionarios(){
         List<FuncionarioDto>lista = new ArrayList<>();
         for (Funcionario f: repository.findAll()) {
             lista.add(mapper.converteModelParaDto(f));
-
         }
         return lista;
     }
-
 }

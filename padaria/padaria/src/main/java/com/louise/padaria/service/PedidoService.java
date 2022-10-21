@@ -1,6 +1,11 @@
 package com.louise.padaria.service;
 
+import com.louise.padaria.dto.PedidoConsultarDto;
+import com.louise.padaria.dto.PedidoSalvarDto;
+import com.louise.padaria.mapper.ClienteMapper;
 import com.louise.padaria.mapper.FuncionarioMapper;
+import com.louise.padaria.mapper.PedidoMapper;
+import com.louise.padaria.mapper.ProdutoMapper;
 import com.louise.padaria.model.Cliente;
 import com.louise.padaria.model.Funcionario;
 import com.louise.padaria.model.Pedido;
@@ -25,11 +30,18 @@ public class PedidoService {
     private ProdutoService produtoService;
     @Autowired
     private FuncionarioMapper funcionarioMapper;
+    @Autowired
+    private ClienteMapper clienteMapper;
+    @Autowired
+    private ProdutoMapper produtoMapper;
+    @Autowired
+    private PedidoMapper mapper;
 
-    public boolean salvarPedido(Pedido pedido){
-        Funcionario funcionario = funcionarioMapper.converterDtoParaModel(funcionarioService.buscarFuncionarioPorId(pedido.getFuncionario().getId()));
-        Cliente cliente = clienteService.buscarClientePorId(pedido.getCliente().getId());
-        Produto produto = produtoService.buscarProdutoPorId(pedido.getProduto().getId());
+    public boolean salvarPedido(PedidoSalvarDto dto){
+        Pedido pedido = mapper.converteDtoParaModel(dto);
+        Funcionario funcionario = funcionarioMapper.converterDtoParaModel(funcionarioService.buscarFuncionarioPorId(dto.getIdFuncionario()));
+        Cliente cliente = clienteMapper.converteDtoParaModel(clienteService.buscarClientePorId(dto.getIdCliente()));
+        Produto produto = produtoMapper.converteDtoParaModel(produtoService.buscarProdutoPorId(dto.getIdProduto()));
         pedido.setFuncionario(funcionario);
         pedido.setCliente(cliente);
         pedido.setProduto(produto);
@@ -38,33 +50,37 @@ public class PedidoService {
     }
     
     public boolean deletarPedido(Integer p){
-        Pedido pedido = buscarPedidoPorId(p);
-        if(pedido != null){
-            repository.delete(pedido);
-            return true;
+        if(p != null){
+        Pedido pedido = mapper.converteDtoParaModel(buscarPedidoPorId(p));
+            if(pedido != null) {
+                repository.delete(pedido);
+                return true;
+            }
         }
         return false;
     }
 
     public boolean atualizarPedido(Pedido ped){
-        Pedido pedido = buscarPedidoPorId(ped.getId());
-        if (pedido != null){
-            Funcionario funcionario = funcionarioMapper.converterDtoParaModel(funcionarioService.buscarFuncionarioPorId(ped.getFuncionario().getId()));
-            Cliente cliente = clienteService.buscarClientePorId(ped.getCliente().getId());
-            Produto produto = produtoService.buscarProdutoPorId(ped.getProduto().getId());
-            ped.setFuncionario(funcionario);
-            ped.setCliente(cliente);
-            ped.setProduto(produto);
-            repository.save(ped);
-            return true;
+        if(ped != null){
+            PedidoConsultarDto pedido = buscarPedidoPorId(ped.getId());
+            if (pedido != null) {
+                Funcionario funcionario = funcionarioMapper.converterDtoParaModel(funcionarioService.buscarFuncionarioPorId(ped.getFuncionario().getId()));
+                Cliente cliente = clienteMapper.converteDtoParaModel(clienteService.buscarClientePorId(ped.getCliente().getId()));
+                Produto produto = produtoMapper.converteDtoParaModel(produtoService.buscarProdutoPorId(ped.getProduto().getId()));
+                ped.setFuncionario(funcionario);
+                ped.setCliente(cliente);
+                ped.setProduto(produto);
+                repository.save(ped);
+                return true;
+            }
         }
         return false;
     }
 
-    public Pedido buscarPedidoPorId(Integer id) {
+    public PedidoConsultarDto buscarPedidoPorId(Integer id) {
         Optional<Pedido> pedido = repository.findById(id);
         if(pedido.isPresent()){
-            return pedido.get();
+            return mapper.converteModelParaDtoConsultar(pedido.get()) ;
         }
         return null;
 
