@@ -67,7 +67,7 @@ public class ClienteMapper {
         dto.setData(model.getData());
         return dto;
     }
-    public Cliente converteDtoParaConsultar(ClienteConsultarDto dto){
+    public Cliente converteDtoParaModel(ClienteConsultarDto dto){
         Cliente model = new Cliente();
         model.setId(dto.getId());
         model.setNome(dto.getNome());

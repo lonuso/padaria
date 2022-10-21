@@ -60,7 +60,7 @@ public class ProdutoMapper {
         dto.setQuantidade(model.getQuantidade());
         return dto;
     }
-    public Produto converteDtoParaConsultar(ProdutoConsultarDto dto){
+    public Produto converteDtoParaModel(ProdutoConsultarDto dto){
         Produto model = new Produto();
         model.setId(dto.getId());
         model.setNome(dto.getNome());

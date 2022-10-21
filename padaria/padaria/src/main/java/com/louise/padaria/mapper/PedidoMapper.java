@@ -99,7 +99,7 @@ public class PedidoMapper {
         model.setCliente(clienteModel);
         return model;
     }
-    public PedidoConsultarDto converteModelParaConsultar(Pedido model){
+    public PedidoConsultarDto converteModelParaDtoConsultar(Pedido model){
         PedidoConsultarDto dto = new PedidoConsultarDto();
         dto.setId(model.getId());
         dto.setQuantidade(model.getQuantidade());
@@ -126,7 +126,7 @@ public class PedidoMapper {
         dto.setClienteConsultarDto(clienteDto);
         return dto;
     }
-    public Pedido converteDtoParaConsultar(PedidoConsultarDto dto){
+    public Pedido converteDtoParaModel(PedidoConsultarDto dto){
         Pedido model = new Pedido();
         model.setId(dto.getId());
         model.setQuantidade(dto.getQuantidade());
