@@ -1,5 +1,8 @@
 package com.louise.padaria.controller;
 
+import com.louise.padaria.dto.ProdutoConsultarDto;
+import com.louise.padaria.dto.ProdutoEditarDto;
+import com.louise.padaria.dto.ProdutoSalvarDto;
 import com.louise.padaria.model.Produto;
 import com.louise.padaria.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +17,8 @@ public class ProdutoController {
     private ProdutoService service;
 
     @GetMapping(value = "/produto/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Produto> procuraProdutoPorId(@PathVariable("id")Integer id){
-        Produto produto = service.buscarProdutoPorId(id);
+    public ResponseEntity<ProdutoConsultarDto> procuraProdutoPorId(@PathVariable("id")Integer id){
+        ProdutoConsultarDto produto = service.buscarProdutoPorId(id);
         if(produto != null){
             return new ResponseEntity<>(produto, HttpStatus.OK);
         }
@@ -23,7 +26,7 @@ public class ProdutoController {
     }
 
     @PostMapping(value = "/produto/salvar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> salvarProduto(@RequestBody Produto novo){
+    public ResponseEntity<String> salvarProduto(@RequestBody ProdutoSalvarDto novo){
         boolean salva = service.salvarProduto(novo);
         if(salva == true){
             return new ResponseEntity<>("Salvo com sucesso", HttpStatus.CREATED);
@@ -32,7 +35,7 @@ public class ProdutoController {
     }
 
     @PutMapping(value = "/produto/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> editarProduto(@RequestBody Produto produto){
+    public ResponseEntity<String> editarProduto(@RequestBody ProdutoEditarDto produto){
         boolean editar = service.atualizarProduto(produto);
         if(editar == true){
             return new ResponseEntity<>("Editado com sucesso", HttpStatus.OK);
