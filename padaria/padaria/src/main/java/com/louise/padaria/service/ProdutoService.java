@@ -42,7 +42,7 @@ public class ProdutoService {
             ProdutoConsultarDto produto = buscarProdutoPorId(prod.getId());
             if (produto != null){
                  Produto produtoAtualizar = mapper.converteDtoParaModel(prod);
-                 repository.save(produtoAtualizar;
+                 repository.save(produtoAtualizar);
                  return true;
             }
         }
