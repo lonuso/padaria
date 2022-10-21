@@ -1,6 +1,9 @@
 package com.louise.padaria.controller;
 
 
+import com.louise.padaria.dto.ClienteConsultarDto;
+import com.louise.padaria.dto.ClienteEditarDto;
+import com.louise.padaria.dto.ClienteSalvarDto;
 import com.louise.padaria.model.Cliente;
 import com.louise.padaria.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,8 @@ public class ClienteController {
     private ClienteService service;
 
     @GetMapping(value = "/cliente/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Cliente> procuraClientePorId(@PathVariable("id")Integer id){
-        Cliente cliente = service.buscarClientePorId(id);
+    public ResponseEntity<ClienteConsultarDto> procuraClientePorId(@PathVariable("id")Integer id){
+        ClienteConsultarDto cliente = service.buscarClientePorId(id);
         if(cliente != null){
             return new ResponseEntity<>(cliente,HttpStatus.OK);
         }
@@ -24,7 +27,7 @@ public class ClienteController {
     }
 
     @PostMapping(value = "/cliente/salvar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> salvarCliente(@RequestBody Cliente novo){
+    public ResponseEntity<String> salvarCliente(@RequestBody ClienteSalvarDto novo){
         boolean salva = service.salvarCliente(novo);
         if(salva == true){
             return new ResponseEntity<>("Salvo com sucesso", HttpStatus.CREATED);
@@ -33,7 +36,7 @@ public class ClienteController {
     }
 
     @PutMapping(value = "/cliente/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> editarCliente(@RequestBody Cliente cliente){
+    public ResponseEntity<String> editarCliente(@RequestBody ClienteEditarDto cliente){
         boolean editar = service.atualizarCliente(cliente);
         if(editar == true){
             return new ResponseEntity<>("Editado com sucesso", HttpStatus.OK);
