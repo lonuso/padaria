@@ -1,9 +1,7 @@
 package com.louise.padaria.controller;
 
 
-import com.louise.padaria.dto.ClienteConsultarDto;
-import com.louise.padaria.dto.ClienteEditarDto;
-import com.louise.padaria.dto.ClienteSalvarDto;
+import com.louise.padaria.dto.*;
 import com.louise.padaria.model.Cliente;
 import com.louise.padaria.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ClienteController {
@@ -52,6 +52,12 @@ public class ClienteController {
             return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
         }
         return new ResponseEntity<>("Ocorreu erro", HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping(value = "/cliente/todos", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<ClienteDto>> listarTodosClientes(){
+
+        return new ResponseEntity<>(service.buscarTodosClientes(), HttpStatus.OK);
+
     }
 
 
