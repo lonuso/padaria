@@ -1,9 +1,17 @@
 package com.louise.padaria.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "FuncionarioSalvarDto")
 public class FuncionarioSalvarDto {
+    @ApiModelProperty(value = "Louise",name = "nome", dataType = "java.lang.String",notes = "Funcionario Nome", example = "Louise")
     private String nome;
+    @ApiModelProperty(value = "Secretaria",name = "cargo", dataType = "java.lang.String",notes = "Funcionario Cargo", example = "Secretaria")
     private String cargo;
+    @ApiModelProperty(value = "156.556.456-56",name = "cpf", dataType = "java.lang.String",notes = "Funcionario Cpf", example = "156.556.456-56")
     private String cpf;
+    @ApiModelProperty(value = "(98)9999-9999",name = "telefone", dataType = "java.lang.String",notes = "Funcionario Telefone", example = "(98)9999-9999")
     private String telefone;
 
     public String getNome(){

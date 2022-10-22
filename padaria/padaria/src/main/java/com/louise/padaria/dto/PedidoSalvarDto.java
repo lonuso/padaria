@@ -1,10 +1,19 @@
 package com.louise.padaria.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "PedidoSalvarDto")
 public class PedidoSalvarDto {
-    private Double valor;
+    @ApiModelProperty(value = "1", name = "quantidade", dataType = "java.lang.Integer",notes = "Pedido quantidade", example = "1")
     private int quantidade;
-    private Integer idProduto;
+    @ApiModelProperty(value = "2.00", name = "valor", dataType = "java.lang.Double",notes = "Pedido valor", example = "2.00")
+    private Double valor;
+    @ApiModelProperty(value = "1", name = "idFuncionario", dataType = "java.lang.Integer",notes = "Pedido IdFuncionario", example = "1")
     private Integer idFuncionario;
+    @ApiModelProperty(value = "1", name = "idProduto", dataType = "java.lang.Integer",notes = "Pedido IdProduto", example = "1")
+    private Integer idProduto;
+    @ApiModelProperty(value = "1", name = "idCliente", dataType = "java.lang.Integer",notes = "Pedido IdCliente", example = "1")
     private Integer idCliente;
 
 

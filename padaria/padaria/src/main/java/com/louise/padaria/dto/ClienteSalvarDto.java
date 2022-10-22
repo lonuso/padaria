@@ -1,11 +1,19 @@
 package com.louise.padaria.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
+@ApiModel(value = "ClienteSalvarDto")
 public class ClienteSalvarDto {
+    @ApiModelProperty(value = "Louise",name = "nome", dataType = "java.lang.String",notes = "Cliente Nome", example = "Louise")
     private String nome;
+    @ApiModelProperty(value = "156.556.456-56",name = "cpf", dataType = "java.lang.String",notes = "Cliente Cpf", example = "156.556.456-56")
     private String cpf;
+    @ApiModelProperty(value = "email@email.com",name = "email", dataType = "java.lang.String",notes = "Cliente Email", example = "email@email.com")
     private String email;
+    @ApiModelProperty(value = "20/02/1996",name = "data", dataType = "java.util.Date",notes = "Cliente Data", example = "20/02/1996")
     private Date data;
 
     public String getNome() {return nome;}
