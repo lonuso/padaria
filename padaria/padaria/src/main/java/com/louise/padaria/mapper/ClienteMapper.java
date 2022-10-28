@@ -47,6 +47,7 @@ public class ClienteMapper {
         dto.setCpf(model.getCpf());
         dto.setEmail(model.getEmail());
         dto.setData(model.getData());
+        dto.setTelefone(model.getTelefone());
         return dto;
     }
     public Cliente converteDtoParaModel(ClienteSalvarDto dto){
@@ -55,6 +56,7 @@ public class ClienteMapper {
         model.setCpf(dto.getCpf());
         model.setEmail(dto.getEmail());
         model.setData(dto.getData());
+        model.setTelefone(dto.getTelefone());
         return model;
     }
     public ClienteConsultarDto converteModelParaConsultar(Cliente model){

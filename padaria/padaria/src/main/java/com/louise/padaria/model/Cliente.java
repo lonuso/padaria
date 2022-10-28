@@ -23,7 +23,7 @@ public class Cliente implements Serializable {
     private String telefone;
     @Column(name = "email_cliente")
     private String email;
-    @Column(name = "data_de_nascimento")
+    @Column(name = "data_nascimento_cliente")
     private Date data;
 
     @OneToMany(mappedBy = "cliente")
