@@ -4,9 +4,12 @@ import com.louise.padaria.dto.ClienteConsultarDto;
 import com.louise.padaria.dto.ClienteDto;
 import com.louise.padaria.dto.ClienteEditarDto;
 import com.louise.padaria.dto.ClienteSalvarDto;
+import com.louise.padaria.excessao.*;
 import com.louise.padaria.mapper.ClienteMapper;
 import com.louise.padaria.model.Cliente;
 import com.louise.padaria.repository.ClienteRepository;
+import com.louise.padaria.util.validacao.ClienteValidacao;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +23,15 @@ public class ClienteService {
     private ClienteRepository repository;
     @Autowired
     private ClienteMapper mapper;
-    public boolean salvarCliente(ClienteSalvarDto dto){
-        Cliente cliente = mapper.converteDtoParaModel(dto);
-        repository.save(cliente);
-        return true;
-    }
 
+    @Autowired
+    private ClienteValidacao validacao;
+    public boolean salvarCliente(ClienteSalvarDto dto) throws ClienteInvalidoException{
+        validacao.clienteValido(dto);
+            Cliente cliente = mapper.converteDtoParaModel(dto);
+            repository.save(cliente);
+            return true;
+    }
     public boolean deletarCliente(Integer c){
         if(c != null){
             Cliente cliente = mapper.converteDtoParaModel(buscarClientePorId(c));

@@ -2,6 +2,7 @@ package com.louise.padaria.controller;
 
 
 import com.louise.padaria.dto.*;
+import com.louise.padaria.excessao.*;
 import com.louise.padaria.model.Cliente;
 import com.louise.padaria.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,15 @@ public class ClienteController {
 
     @PostMapping(value = "/cliente/salvar", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<String> salvarCliente(@RequestBody ClienteSalvarDto novo){
-        boolean salva = service.salvarCliente(novo);
-        if(salva == true){
-            return new ResponseEntity<>("Salvo com sucesso", HttpStatus.CREATED);
+        try{
+            boolean salva = service.salvarCliente(novo);
+            if(salva == true){
+                return new ResponseEntity<>("Salvo com sucesso", HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>("Ocorreu um erro ao salvar", HttpStatus.BAD_REQUEST);
+        }catch (ClienteInvalidoException e){
+            return new ResponseEntity<>(e.getErro().toString(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Ocorreu um erro ao salvar", HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/cliente/editar", produces = {MediaType.APPLICATION_JSON_VALUE})

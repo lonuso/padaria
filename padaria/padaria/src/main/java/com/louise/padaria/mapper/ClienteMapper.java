@@ -17,6 +17,7 @@ public class ClienteMapper {
     }
     public Cliente converteDtoParaModel(ClienteDto dto){
         Cliente model = new Cliente();
+
         model.setId(dto.getId());
         model.setNome(dto.getNome());
         return model;
@@ -32,12 +33,13 @@ public class ClienteMapper {
         return dto;
     }
     public Cliente converteDtoParaModel(ClienteEditarDto dto){
-        Cliente model = new Cliente();
+       // Cliente model = new Cliente();
+        Cliente model = new Cliente(dto.getNome(), dto.getEmail(), dto.getCpf());
         model.setId(dto.getId());
-        model.setNome(dto.getNome());
-        model.setCpf(dto.getCpf());
+        //model.setNome(dto.getNome());
+        //model.setCpf(dto.getCpf());
         model.setTelefone(dto.getTelefone());
-        model.setEmail(dto.getEmail());
+        //model.setEmail(dto.getEmail());
         model.setData(dto.getData());
         return model;
     }

@@ -30,6 +30,14 @@ public class Cliente implements Serializable {
     @JsonIgnore
     private List<Pedido> listaPedidos;
 
+    public Cliente(String nome, String email, String cpf){
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+    }
+    public Cliente(){
+
+    }
 
     public Integer getId(){return this.id;}
     public String getNome(){return this.nome;}
