@@ -2,15 +2,16 @@ package com.louise.padaria.excessao;
 
 import com.louise.padaria.excessao.dto.ErroData;
 
-public class ClienteInvalidoException extends Exception{
+public class FuncionarioInvalidoException extends Exception{
     private ErroData erro;
-    public ClienteInvalidoException(ErroData erro){
+    public FuncionarioInvalidoException(ErroData erro){
         super(erro.getMensagem());
         this.erro = erro;
     }
-    public ClienteInvalidoException (String mensagem){
+    public FuncionarioInvalidoException (String mensagem){
         super(mensagem);
     }
+
     public ErroData getErro(){
         return this.erro;
     }

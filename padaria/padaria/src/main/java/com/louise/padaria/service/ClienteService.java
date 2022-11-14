@@ -23,7 +23,6 @@ public class ClienteService {
     private ClienteRepository repository;
     @Autowired
     private ClienteMapper mapper;
-
     @Autowired
     private ClienteValidacao validacao;
     public boolean salvarCliente(ClienteSalvarDto dto) throws ClienteInvalidoException{

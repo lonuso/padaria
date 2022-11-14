@@ -21,9 +21,7 @@ public class ClienteValidacao {
     }
     public void clienteValido(ClienteSalvarDto dto) throws ClienteInvalidoException{
             verificaClienteErro(dto);
-
     }
-
     private void verificaCliente(ClienteSalvarDto dto) throws CpfInvalidoException, NomeInvalidoException, EmailInvalidoException, TelefoneInvalidoException, DataInvalidoException {
         if(!isCpfValido(dto.getCpf())) {
             throw new CpfInvalidoException("O cpf que você informou é inválido, informe um não nulo e não vazio");
@@ -62,13 +60,11 @@ public class ClienteValidacao {
         if(listaErro.size()>0){
             throw new ClienteInvalidoException(new ErroData("O cliente informado é invalido", listaErro));
         }
-
     }
 
     private static void adicionaErro(ErroValor dto, List<ErroValor> listaErro) {
         listaErro.add(dto);
     }
-
     private boolean isCpfValido(String cpf){
         return isStringNaoNulaENaoVazia(cpf) && cpf.length()>0 && (cpf.length() == 14 || cpf.length() == 11)
                 && isPadraoCpf(cpf);
@@ -91,8 +87,6 @@ public class ClienteValidacao {
     private boolean isPadraoEmail(String email){
         return isStringNaoNulaENaoVazia(email) && email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     }
-
-
     private boolean isStringNaoNulaENaoVazia(String valor){
         return valor!= null && !valor.trim().isEmpty();
     }

@@ -4,9 +4,11 @@ import com.louise.padaria.dto.ProdutoConsultarDto;
 import com.louise.padaria.dto.ProdutoDto;
 import com.louise.padaria.dto.ProdutoEditarDto;
 import com.louise.padaria.dto.ProdutoSalvarDto;
+import com.louise.padaria.excessao.ProdutoInvalidoException;
 import com.louise.padaria.mapper.ProdutoMapper;
 import com.louise.padaria.model.Produto;
 import com.louise.padaria.repository.ProdutoRepository;
+import com.louise.padaria.util.validacao.ProdutoValidacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +22,15 @@ public class ProdutoService {
     private ProdutoRepository repository;
     @Autowired
     private ProdutoMapper mapper;
+    @Autowired
+    private ProdutoValidacao validacao;
 
-    public boolean salvarProduto(ProdutoSalvarDto dto){
-        Produto produto = mapper.converteDtoParaModel(dto);
-        repository.save(produto);
-        return true;
+    public boolean salvarProduto(ProdutoSalvarDto dto) throws ProdutoInvalidoException {
+        validacao.produtoValido(dto);
+            Produto produto = mapper.converteDtoParaModel(dto);
+            repository.save(produto);
+            return true;
     }
-
     public boolean deletarProduto(Integer pr){
         if(pr != null) {
             Produto produto = mapper.converteDtoParaModel(buscarProdutoPorId(pr));

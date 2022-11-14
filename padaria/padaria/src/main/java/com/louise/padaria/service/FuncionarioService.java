@@ -4,9 +4,11 @@ import com.louise.padaria.dto.FuncionarioConsultarDto;
 import com.louise.padaria.dto.FuncionarioDto;
 import com.louise.padaria.dto.FuncionarioEditarDto;
 import com.louise.padaria.dto.FuncionarioSalvarDto;
+import com.louise.padaria.excessao.FuncionarioInvalidoException;
 import com.louise.padaria.mapper.FuncionarioMapper;
 import com.louise.padaria.model.Funcionario;
 import com.louise.padaria.repository.FuncionarioRepository;
+import com.louise.padaria.util.validacao.FuncionarioValidacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,13 @@ public class FuncionarioService {
     private FuncionarioRepository repository;
     @Autowired
     private FuncionarioMapper mapper;
-    public boolean salvarFuncionario(FuncionarioSalvarDto dto){
-        Funcionario funcionario = mapper.converterDtoParaModel(dto);
-        repository.save(funcionario);
-        return true;
+    @Autowired
+    private FuncionarioValidacao validacao;
+    public boolean salvarFuncionario(FuncionarioSalvarDto dto) throws FuncionarioInvalidoException{
+        validacao.funcionarioValido(dto);
+            Funcionario funcionario = mapper.converterDtoParaModel(dto);
+            repository.save(funcionario);
+            return true;
     }
 
     public boolean deletarFuncionario(Integer f){

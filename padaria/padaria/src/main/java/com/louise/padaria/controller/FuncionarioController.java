@@ -4,6 +4,7 @@ import com.louise.padaria.dto.FuncionarioConsultarDto;
 import com.louise.padaria.dto.FuncionarioDto;
 import com.louise.padaria.dto.FuncionarioEditarDto;
 import com.louise.padaria.dto.FuncionarioSalvarDto;
+import com.louise.padaria.excessao.FuncionarioInvalidoException;
 import com.louise.padaria.model.Funcionario;
 import com.louise.padaria.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,17 @@ public class FuncionarioController {
 
     }
     @PostMapping(value = "/funcionario/salvar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> salvarFuncionario(@RequestBody FuncionarioSalvarDto novo){
-        boolean salva = service.salvarFuncionario(novo);
-        if(salva == true){
-            return new ResponseEntity<>("Salvo com sucesso", HttpStatus.CREATED);
+    public ResponseEntity<String> salvarFuncionario(@RequestBody FuncionarioSalvarDto novo) {
+        try {
+            boolean salva = service.salvarFuncionario(novo);
+            if (salva == true) {
+                return new ResponseEntity<>("Salvo com sucesso", HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>("Ocorreu um erro ao salvar", HttpStatus.BAD_REQUEST);
+        }catch (FuncionarioInvalidoException e){
+            return new ResponseEntity<>(e.getErro().toString(),HttpStatus.BAD_REQUEST);
         }
-        return  new ResponseEntity<>("Ocorreu um erro ao salvar",HttpStatus.BAD_REQUEST);
     }
-
     @PutMapping(value = "/funcionario/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<String> editarFuncionario(@RequestBody FuncionarioEditarDto funcionario){
         boolean editar = service.atualizarFuncionario(funcionario);
