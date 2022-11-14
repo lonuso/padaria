@@ -4,6 +4,7 @@ import com.louise.padaria.dto.PedidoConsultarDto;
 import com.louise.padaria.dto.PedidoDto;
 import com.louise.padaria.dto.PedidoEditarDto;
 import com.louise.padaria.dto.PedidoSalvarDto;
+import com.louise.padaria.excessao.PedidoInvalidoException;
 import com.louise.padaria.mapper.ClienteMapper;
 import com.louise.padaria.mapper.FuncionarioMapper;
 import com.louise.padaria.mapper.PedidoMapper;
@@ -13,6 +14,7 @@ import com.louise.padaria.model.Funcionario;
 import com.louise.padaria.model.Pedido;
 import com.louise.padaria.model.Produto;
 import com.louise.padaria.repository.PedidoRepository;
+import com.louise.padaria.util.validacao.PedidoValidacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,10 @@ public class PedidoService {
     @Autowired
     private PedidoMapper mapper;
 
-    public boolean salvarPedido(PedidoSalvarDto dto){
+    @Autowired
+    private PedidoValidacao validacao;
+    public boolean salvarPedido(PedidoSalvarDto dto) throws PedidoInvalidoException {
+        validacao.pedidoValidacao(dto);
         Pedido pedido = mapper.converteDtoParaModel(dto);
         Funcionario funcionario = funcionarioMapper.converterDtoParaModel(funcionarioService.buscarFuncionarioPorId(dto.getIdFuncionario()));
         Cliente cliente = clienteMapper.converteDtoParaModel(clienteService.buscarClientePorId(dto.getIdCliente()));
@@ -63,8 +68,9 @@ public class PedidoService {
         return false;
     }
 
-    public boolean atualizarPedido(PedidoEditarDto dto){
+    public boolean atualizarPedido(PedidoEditarDto dto) throws PedidoInvalidoException {
         if(dto != null){
+            validacao.pedidoValidacao(dto);
             PedidoConsultarDto pedido = buscarPedidoPorId(dto.getId());
             if (pedido != null) {
                 Pedido ped = mapper.converteDtoParaModel(dto);

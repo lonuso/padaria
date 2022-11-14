@@ -1,6 +1,7 @@
 package com.louise.padaria.util.validacao;
 
 import com.louise.padaria.dto.ClienteSalvarDto;
+import com.louise.padaria.dto.PedidoEditarDto;
 import com.louise.padaria.dto.PedidoSalvarDto;
 import com.louise.padaria.excessao.*;
 import com.louise.padaria.excessao.dto.ErroData;
@@ -16,8 +17,15 @@ import java.util.List;
 public class PedidoValidacao {
     public void pedidoValidacao(PedidoSalvarDto dto) throws PedidoInvalidoException{
         try{
-            verificaPedido(dto);
-        }catch (QuantidadeInvalidoException | ValorInvalidoException e){
+            verificaPedidoErro(dto);
+        }catch (PedidoInvalidoException e){
+            throw new PedidoInvalidoException(e.getMessage());
+        }
+    }
+    public void pedidoValidacao(PedidoEditarDto dto) throws PedidoInvalidoException{
+        try{
+            verificaPedidoErro(dto);
+        }catch (PedidoInvalidoException e){
             throw new PedidoInvalidoException(e.getMessage());
         }
     }
@@ -37,6 +45,19 @@ public class PedidoValidacao {
     }
 
     private void verificaPedidoErro(PedidoSalvarDto dto) throws PedidoInvalidoException {
+        List<ErroValor> listaErro = new ArrayList<>();
+        if(!isQuantidadeValido(dto.getQuantidade())) {
+            listaErro.add(new ErroValor("A quantidade que você informou é inválida, informe um não nulo e não vazio", dto.getQuantidade()));
+        }
+        if(!isValorValido(dto.getValor())){
+            listaErro.add(new ErroValor("O valor que você informou é inválido", dto.getValor()));
+        }
+        if(listaErro.size()>0){
+            throw new PedidoInvalidoException(new ErroData("O cliente informado é invalido", listaErro));
+        }
+    }
+
+    private void verificaPedidoErro(PedidoEditarDto dto) throws PedidoInvalidoException {
         List<ErroValor> listaErro = new ArrayList<>();
         if(!isQuantidadeValido(dto.getQuantidade())) {
             listaErro.add(new ErroValor("A quantidade que você informou é inválida, informe um não nulo e não vazio", dto.getQuantidade()));

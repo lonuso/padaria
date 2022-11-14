@@ -1,6 +1,7 @@
 package com.louise.padaria.controller;
 
 import com.louise.padaria.dto.*;
+import com.louise.padaria.excessao.PedidoInvalidoException;
 import com.louise.padaria.model.Pedido;
 import com.louise.padaria.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PedidoController {
     }
 
     @PostMapping(value = "/pedido/salvar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> salvarPedido(@RequestBody PedidoSalvarDto novo){
+    public ResponseEntity<String> salvarPedido(@RequestBody PedidoSalvarDto novo) throws PedidoInvalidoException {
         boolean salva = service.salvarPedido(novo);
         if(salva == true){
             return new ResponseEntity<>("Salvo com sucesso", HttpStatus.CREATED);
@@ -35,7 +36,7 @@ public class PedidoController {
     }
 
     @PutMapping(value = "/pedido/editar", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> editarPedido(@RequestBody PedidoEditarDto pedido){
+    public ResponseEntity<String> editarPedido(@RequestBody PedidoEditarDto pedido) throws PedidoInvalidoException {
         boolean editar = service.atualizarPedido(pedido);
         if(editar == true){
             return new ResponseEntity<>("Editado com sucesso", HttpStatus.OK);
